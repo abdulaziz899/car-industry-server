@@ -1,4 +1,3 @@
-//npm install nodemon mongodb body-parser cors dotenv express
 
 const express = require('express')
 require('dotenv').config()
@@ -18,8 +17,6 @@ const port = process.env.PORT || 4000;
 app.get('/', (req, res) => {
   res.send('Hello World!')
 })
-
-
 
 const uri = `mongodb://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0-shard-00-00.w8vla.mongodb.net:27017,cluster0-shard-00-01.w8vla.mongodb.net:27017,cluster0-shard-00-02.w8vla.mongodb.net:27017/${process.env.DB_NAME}?ssl=true&replicaSet=atlas-kn5rpb-shard-0&authSource=admin&retryWrites=true&w=majority`;
 
@@ -91,14 +88,12 @@ MongoClient.connect(uri, function(err, client) {
           if (admin.length===0) {
             usersCollection.find({email:email})
             .toArray((err,documents)=>{
-                console.log(documents);
                 res.send(documents);
             })
           }
           else if(admin.length>0){
             usersCollection.find({})
             .toArray((err,documents)=>{
-                console.log(documents);
                 res.send(documents);
             })
           }
@@ -112,7 +107,6 @@ MongoClient.connect(uri, function(err, client) {
       const newStaff=req.body;
       staffCollection.insertOne(newStaff)
       .then(result=>{
-      console.log(result.insertedCount);
       res.send(result.insertedCount>0);
       })
   });
@@ -129,7 +123,6 @@ MongoClient.connect(uri, function(err, client) {
     app.get('/allStaff',(req,res)=>{
       staffCollection.find({})
         .toArray((err,documents)=>{
-            console.log(documents);
             res.send(documents);
         })
     });
@@ -138,7 +131,6 @@ MongoClient.connect(uri, function(err, client) {
     app.delete('/deletes/:id',(req,res)=>{
       staffCollection.deleteOne({_id:ObjectId(req.params.id)})
       .then(result=>{
-       console.log(result);
        res.send(result.deletedCount>0)
       })
     })
@@ -149,7 +141,6 @@ MongoClient.connect(uri, function(err, client) {
         const review=req.body;
         reviewCollection.insertOne(review)
         .then(result=>{
-        console.log(result.insertedCount);
         res.send(result.insertedCount>0);
         })
     })
@@ -158,7 +149,6 @@ MongoClient.connect(uri, function(err, client) {
     app.get('/allReview',(req,res)=>{
       reviewCollection.find({})
         .toArray((err,documents)=>{
-            console.log(documents);
             res.send(documents);
         })
     });
@@ -167,7 +157,6 @@ MongoClient.connect(uri, function(err, client) {
     app.get('/services/:id',(req,res)=>{
       collection.find({_id:ObjectId(req.params.id)})
       .toArray((err,documents)=>{
-        console.log(documents);
         res.send(documents[0])
       })
     })
