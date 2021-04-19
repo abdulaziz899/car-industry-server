@@ -161,6 +161,15 @@ MongoClient.connect(uri, function(err, client) {
       })
     })
 
+    // success full working project
+
+    app.get('/successFullProject',(req,res)=>{
+      usersCollection.find({})
+        .toArray((err,documents)=>{
+            res.send(documents);
+        })
+    });
+
 
 });
 
